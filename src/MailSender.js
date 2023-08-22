@@ -13,7 +13,7 @@ class MailSender {
   }
 
   sendEmail(targetEmail, content) {
-    let filename = JSON.parse(content).name;
+    let filename = JSON.parse(content).playlist.name;
     filename = `OpenMusic_Playlist_${filename.replace(/\s/g, "_")}.json`;
 
     const message = {
