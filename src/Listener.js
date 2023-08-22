@@ -1,14 +1,16 @@
 class Listener {
-  constructor(mailSender) {
+  constructor(mailSender, playlistsService) {
     this._mailSender = mailSender;
+    this._playlistsService = playlistsService;
     this.listen = this.listen.bind(this);
   }
 
   async listen(message) {
-    const { playlist, targetEmail } = JSON.parse(message.content.toString());
+    const { playlistId, targetEmail } = JSON.parse(message.content.toString());
+    const playlist = await this._playlistsService.findById(playlistId);
     const result = await this._mailSender.sendEmail(
       targetEmail,
-      JSON.stringify(playlist)
+      JSON.stringify({ playlist })
     );
 
     console.info(result);
